@@ -1,0 +1,3 @@
+export const money=n=>new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:2}).format(Number(n||0));
+export const dateTime=v=>v?new Date(String(v).replace(' ','T')).toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'}):'—';
+export function downloadCsv(filename,rows){if(!rows.length)return;const keys=Object.keys(rows[0]);const quote=v=>`"${String(v??'').replaceAll('"','""')}"`;const csv=[keys.map(quote).join(','),...rows.map(r=>keys.map(k=>quote(r[k])).join(','))].join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download=filename;a.click();URL.revokeObjectURL(a.href);}
